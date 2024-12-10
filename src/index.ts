@@ -104,4 +104,3 @@ app.get('/block_proof', async (req, res: express.Response) => {
 app.listen(port, () => {
 	console.log(`Magic is happening at http://localhost:${port}`)
 })
-
