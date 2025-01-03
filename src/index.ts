@@ -36,7 +36,6 @@ app.get('/state_proof', async (req: express.Request, res: express.Response) => {
 			leaf: toHexString(proof.leaf),
 			witnesses: proof.witnesses.map(w => toHexString(w))
 		} 
-
 		return res.json(serializedProof)
 	}
 	catch (e: any) {
@@ -67,6 +66,14 @@ app.get('/has_state', async (req, res: express.Response) => {
 		let code = 'code' in e ? e.code : 500
 		return res.status(code).send(e.message)
 	}
+})
+
+app.get('/health_check', async (req, res: express.Response) => {
+	let network = req.query.network ? req.query.network as string : 'mainnet'
+	if (!supportedNetworks.includes(network as NETWORK)) {
+		return res.status(400).send('Invalid network')
+	}
+	return res.sendStatus(200)
 })
 
 app.get('/block_proof', async (req, res: express.Response) => {
